@@ -3,6 +3,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <algorithm>
+#include <iostream>
 
 template <size_t N, class T>
 class FixedThreadPool {
@@ -28,6 +29,7 @@ class FixedThreadPool {
 			if (que.empty()) {
 				std::unique_lock<std::mutex> lock(qf);
 				finished[id] = true;
+				std::cout << "Worker " << id << " finished\n";
 				done.notify_all();
 				return;
 			}
